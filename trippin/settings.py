@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'query.apps.QueryConfig',
+    'location_field.apps.DefaultConfig',
+    'languages',
 ]
 
 
