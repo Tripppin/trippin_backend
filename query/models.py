@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from languages.fields import LanguageField
+#from languages.fields import LanguageField
 
 from django.contrib.postgres.fields import ArrayField
 
@@ -12,7 +12,7 @@ class Query(models.Model):
     id = models.AutoField(primary_key=True)
     date = models.DateTimeField('date published', default=timezone.now)
     title = models.CharField(max_length=100, blank=True, null=True)
-    query = models.CharField(max_length=1000, blank=False)
+    query = models.CharField(max_length=1000, blank=True, null=True)
     email = models.EmailField(default=None, null=True)
 
     def __str__(self):
@@ -34,7 +34,7 @@ class Homestay(models.Model):
     
     location = models.CharField(max_length=50, default=None, null=True)
     phone_numbers = ArrayField(models.DecimalField(max_digits=10, decimal_places=0, default=0), default=None, null=True, db_index=True)
-    languages = ArrayField(LanguageField(), default=None, null=True)
+    languages = ArrayField(models.CharField(max_length=50), default=None, null=True)
     
     email = models.EmailField(default=None, null=True)
     date = models.DateTimeField('date published', default=timezone.now)
@@ -54,14 +54,14 @@ class Guide(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     query = models.CharField(max_length=1000, blank=False)
     
-    first_name = models.CharField(max_length=50)
-    middle_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50, default=None, null=True)
+    middle_name = models.CharField(max_length=50, default=None, null=True)
+    last_name = models.CharField(max_length=50, default=None, null=True)
     phone_numbers = ArrayField(models.DecimalField(max_digits=10, decimal_places=0, default=0), default=None, null=True, db_index=True)
     email = models.EmailField(default=None, null=True)
     
     nationality = models.CharField(max_length=50, default=None, null=True)
-    languages = ArrayField(LanguageField(), default=None, null=True)
+    languages = ArrayField(models.CharField(max_length=50), default=None, null=True)
 
     def __str__(self):
         return f"{self.title}: {self.query}"
@@ -76,20 +76,20 @@ class Tourist(models.Model):
     #user = User
     
     
-    first_name = models.CharField(max_length=50)
-    middle_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50, default=None, null=True)
+    middle_name = models.CharField(max_length=50, default=None, null=True)
+    last_name = models.CharField(max_length=50, default=None, null=True)
     phone_numbers = ArrayField(models.DecimalField(max_digits=10, decimal_places=0, default=0), default=None, null=True, db_index=True)
     email = models.EmailField(default=None, null=True)
     
     nationality = models.CharField(max_length=50, default=None, null=True)
-    languages = ArrayField(LanguageField(), default=None, null=True)
+    languages = ArrayField(models.CharField(max_length=50), default=None, null=True)
     
     date = models.DateTimeField('date published', default=timezone.now)
     
 
     def __str__(self):
-        return f"{self.title}: {self.query}"
+        return f"{self.first_name}: {self.last_name}"
 
     class Meta:
         ordering = ["-id"]
